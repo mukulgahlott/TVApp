@@ -1,97 +1,170 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# TV App
 
-# Getting Started
+A React Native TV application with a modern authentication flow and comprehensive customer management dashboard.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## Features
 
-## Step 1: Start Metro
+- **Splash Screen**: Animated welcome screen with app branding
+- **Login Screen**: Email and password authentication with validation
+- **Registration Screen**: User registration with form validation
+- **Dashboard**: Complete customer management system with multiple screens
+- **Modern UI**: Light theme with consistent styling
+- **Navigation**: Smooth transitions between screens using React Navigation
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Screens
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+### 1. Splash Screen
+- Animated logo and app name
+- Auto-navigation to login after 3 seconds
+- Modern light theme design
 
-```sh
-# Using npm
-npm start
+### 2. Login Screen
+- Email and password input fields
+- Form validation
+- "Forgot Password" link
+- Navigation to registration screen
+- Loading state during authentication
 
-# OR using Yarn
-yarn start
-```
+### 3. Registration Screen
+- Full name, email, password, and confirm password fields
+- Comprehensive form validation
+- Password strength requirements
+- Navigation back to login screen
 
-## Step 2: Build and run your app
+### 4. Dashboard (Main App)
+The dashboard includes four main screens accessible via bottom navigation:
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+#### **Overview Screen (Home)**
+- Key metrics cards (Total Customers, Active Customers, Monthly Revenue, etc.)
+- Performance indicators with percentage changes
+- Upcoming recharges list with customer avatars
+- Notification bell icon
 
-### Android
+#### **Customers Screen**
+- Search functionality for customers
+- Filter buttons (All, Active, Inactive)
+- Customer list with avatars, names, IDs, and status
+- Add customer button (+)
 
-```sh
-# Using npm
-npm run android
+#### **Pending Payments Screen**
+- Search functionality
+- Filter dropdowns (Due Date, Amount)
+- Payment list with customer details and amounts
+- Back navigation
 
-# OR using Yarn
-yarn android
-```
+#### **Settings Screen**
+- Profile settings, notifications, privacy options
+- Payment methods and help support
+- Logout functionality
+
+## Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. For iOS, install pods:
+   ```bash
+   cd ios && pod install && cd ..
+   ```
+
+## Running the App
 
 ### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+```bash
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+### Android
+```bash
+npm run android
+```
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## Dependencies
 
-## Step 3: Modify your app
+- React Native 0.80.2
+- React Navigation 7.x (Stack & Bottom Tabs)
+- React Native Gesture Handler
+- React Native Screens
+- React Native Safe Area Context
 
-Now that you have successfully run the app, let's make changes!
+## Project Structure
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+```
+src/
+├── screens/
+│   ├── SplashScreen.tsx
+│   ├── LoginScreen.tsx
+│   ├── RegisterScreen.tsx
+│   ├── DashboardScreen.tsx
+│   ├── OverviewScreen.tsx
+│   ├── CustomersScreen.tsx
+│   ├── PendingPaymentsScreen.tsx
+│   └── SettingsScreen.tsx
+App.tsx
+index.js
+```
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## Styling
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+The app uses a consistent light theme with the following color palette:
+- Primary Background: `#ffffff`
+- Secondary Background: `#f8f9fa`
+- Primary Color: `#007bff`
+- Border Color: `#dee2e6`
+- Text Colors: `#212529`, `#6c757d`
+- Success Color: `#28a745`
+- Danger Color: `#dc3545`
 
-## Congratulations! :tada:
+## Navigation Flow
 
-You've successfully run and modified your React Native App. :partying_face:
+1. **Splash Screen** → Auto-navigate to Login after 3 seconds
+2. **Login Screen** → Navigate to Registration or Dashboard (after successful login)
+3. **Registration Screen** → Navigate back to Login (after successful registration)
+4. **Dashboard** → Bottom tab navigation between:
+   - Overview (Home)
+   - Customers
+   - Pending Payments
+   - Settings
 
-### Now what?
+## Dashboard Features
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+### Overview Screen
+- **Metrics Cards**: Display key business metrics with trend indicators
+- **Upcoming Recharges**: List of customers with pending payments
+- **Real-time Data**: Simulated data for demonstration
 
-# Troubleshooting
+### Customers Screen
+- **Search & Filter**: Find and filter customers by status
+- **Customer Management**: View customer details and status
+- **Add Customer**: Quick access to add new customers
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+### Pending Payments Screen
+- **Payment Tracking**: Monitor overdue and upcoming payments
+- **Advanced Filtering**: Filter by due date and amount
+- **Payment Details**: View customer and payment information
 
-# Learn More
+### Settings Screen
+- **App Configuration**: Various app settings and preferences
+- **User Management**: Profile and account settings
+- **Logout**: Secure logout functionality
 
-To learn more about React Native, take a look at the following resources:
+## Development Notes
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- The app currently uses simulated API calls for authentication and data
+- Form validation includes email format and password strength checks
+- All screens are optimized for TV interfaces with proper focus management
+- The design follows modern UI/UX principles for business applications
+- Bottom navigation provides easy access to all main features
+
+## Future Enhancements
+
+- Real API integration for authentication and data
+- User profile management
+- Advanced customer analytics
+- Payment processing integration
+- Push notifications
+- Offline mode support
+- Data export functionality

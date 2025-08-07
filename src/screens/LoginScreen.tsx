@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import { useUser } from '../context/UserContext';
 
 interface LoginScreenProps {
   navigation: any;
@@ -18,11 +19,13 @@ interface LoginScreenProps {
 const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [selectedRole, setSelectedRole] = useState<'worker' | 'client' | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { setUserRole, setIsAuthenticated } = useUser();
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
+    if (!email || !password || !selectedRole) {
+      Alert.alert('Error', 'Please fill in all fields and select a role');
       return;
     }
 
@@ -36,13 +39,21 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
     // Simulate API call
     setTimeout(() => {
       setIsLoading(false);
-      // For demo purposes, just show success and navigate to home
+      // Set user role and authentication status
+      setUserRole(selectedRole);
+      setIsAuthenticated(true);
+      
+      // For demo purposes, just show success and navigate to appropriate screen based on role
       Alert.alert('Success', 'Login successful!', [
         {
           text: 'OK',
           onPress: () => {
-            // Navigate to main app screen
-            navigation.replace('Dashboard');
+            // Navigate to appropriate screen based on role
+            if (selectedRole === 'worker') {
+              navigation.replace('Dashboard');
+            } else {
+              navigation.replace('ClientHome');
+            }
           },
         },
       ]);
@@ -88,6 +99,40 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ navigation }) => {
               secureTextEntry
               autoCapitalize="none"
             />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Select Role</Text>
+            <View style={styles.roleContainer}>
+              <TouchableOpacity
+                style={[
+                  styles.roleButton,
+                  selectedRole === 'worker' && styles.roleButtonSelected
+                ]}
+                onPress={() => setSelectedRole('worker')}
+              >
+                <Text style={[
+                  styles.roleButtonText,
+                  selectedRole === 'worker' && styles.roleButtonTextSelected
+                ]}>
+                  Worker
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.roleButton,
+                  selectedRole === 'client' && styles.roleButtonSelected
+                ]}
+                onPress={() => setSelectedRole('client')}
+              >
+                <Text style={[
+                  styles.roleButtonText,
+                  selectedRole === 'client' && styles.roleButtonTextSelected
+                ]}>
+                  Client
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           <TouchableOpacity style={styles.forgotPassword}>
@@ -161,6 +206,31 @@ const styles = StyleSheet.create({
     color: '#212529',
     borderWidth: 1,
     borderColor: '#dee2e6',
+  },
+  roleContainer: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  roleButton: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    paddingVertical: 15,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#dee2e6',
+  },
+  roleButtonSelected: {
+    backgroundColor: '#007bff',
+    borderColor: '#007bff',
+  },
+  roleButtonText: {
+    fontSize: 16,
+    color: '#6c757d',
+    fontWeight: '500',
+  },
+  roleButtonTextSelected: {
+    color: '#ffffff',
   },
   forgotPassword: {
     alignSelf: 'flex-end',

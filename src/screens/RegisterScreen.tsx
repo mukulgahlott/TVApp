@@ -21,11 +21,12 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [selectedRole, setSelectedRole] = useState<'worker' | 'client' | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleRegister = async () => {
-    if (!name || !email || !password || !confirmPassword) {
-      Alert.alert('Error', 'Please fill in all fields');
+    if (!name || !email || !password || !confirmPassword || !selectedRole) {
+      Alert.alert('Error', 'Please fill in all fields and select a role');
       return;
     }
 
@@ -129,6 +130,40 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
               />
             </View>
 
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Select Role</Text>
+              <View style={styles.roleContainer}>
+                <TouchableOpacity
+                  style={[
+                    styles.roleButton,
+                    selectedRole === 'worker' && styles.roleButtonSelected
+                  ]}
+                  onPress={() => setSelectedRole('worker')}
+                >
+                  <Text style={[
+                    styles.roleButtonText,
+                    selectedRole === 'worker' && styles.roleButtonTextSelected
+                  ]}>
+                    Worker
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[
+                    styles.roleButton,
+                    selectedRole === 'client' && styles.roleButtonSelected
+                  ]}
+                  onPress={() => setSelectedRole('client')}
+                >
+                  <Text style={[
+                    styles.roleButtonText,
+                    selectedRole === 'client' && styles.roleButtonTextSelected
+                  ]}>
+                    Client
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
             <TouchableOpacity
               style={[styles.registerButton, isLoading && styles.registerButtonDisabled]}
               onPress={handleRegister}
@@ -201,6 +236,31 @@ const styles = StyleSheet.create({
     color: '#212529',
     borderWidth: 1,
     borderColor: '#dee2e6',
+  },
+  roleContainer: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  roleButton: {
+    flex: 1,
+    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    paddingVertical: 15,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#dee2e6',
+  },
+  roleButtonSelected: {
+    backgroundColor: '#007bff',
+    borderColor: '#007bff',
+  },
+  roleButtonText: {
+    fontSize: 16,
+    color: '#6c757d',
+    fontWeight: '500',
+  },
+  roleButtonTextSelected: {
+    color: '#ffffff',
   },
   registerButton: {
     backgroundColor: '#007bff',
